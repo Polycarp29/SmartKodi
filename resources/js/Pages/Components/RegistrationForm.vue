@@ -2,12 +2,14 @@
 
 </script>
 <template>
-    <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
+    <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-8 mt-8">
         <!-- Header -->
         <div class="text-center mb-10 ">
-            <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-            <p class="text-gray-600 font-light text-lg">Enter your credentials to access your workspace.
-            </p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Create an account</h2>
+           
+            <p class="text-lg font-light text-gray-600 mb-2">Get started with your free
+                account today</p>
+
         </div>
         <form id="loginForm">
             <!---Username-->
@@ -17,11 +19,7 @@
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                            </path>
-                        </svg>
+                        <i class="fa-regular fa-user text-gray-400"></i>
                     </div>
                     <input type="name" id="name" name="name" required
                         class="block w-full pl-10 pr-3 py-3 border border-gray-300  rounded-lg focus:ring-2 focus:outline-none focus:ring-amber-500 focus:border-amber-500 transition-colors"
@@ -79,7 +77,7 @@
             <!--Confirm Password-->
             <div class="mb-2">
                 <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-                   Confirm Password
+                    Confirm Password
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

@@ -20,9 +20,6 @@
                 class="relative w-full max-w-2xl p-10 md:p-12 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
                 <!-- Logo/Brand Mark -->
                 <div class="flex items-center gap-4 mb-6">
-                    <div class="w-16 h-16 bg-amber-600 rounded-lg flex items-center justify-center shadow-lg">
-                        <span class="text-white text-2xl font-bold">SK</span>
-                    </div>
                     <div>
                         <h1 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
                             SmartKoddi
@@ -32,7 +29,7 @@
                 </div>
 
                 <!-- Tagline -->
-                <p class="text-2xl md:text-3xl font-light text-gray-800 leading-tight mb-6">
+                <p class="text-2xl md:text-3xl  font-semibold text-gray-600 leading-tight mb-6">
                     Advanced Property Management Solutions
                 </p>
 
@@ -44,20 +41,20 @@
 
                 <!-- Feature Highlights -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-                    <div class="flex items-center gap-3 bg-amber-100/80 p-6 rounded-xl border border-amber-400">
-                        <div class="w-2 h-2 bg-amber-600 rounded-full"></div>
+                    <div class="flex items-center gap-3 bg-amber-100/80 p-6 rounded-xl border border-amber-300">
+                        <i class="fa-regular fa-star text-amber-600"></i>
                         <span class="text-gray-700 font-medium">Portfolio Analytics</span>
                     </div>
-                    <div class="flex items-center gap-3 bg-amber-100/80 p-6 rounded-xl border border-amber-400">
-                        <div class="w-2 h-2 bg-amber-600 rounded-full"></div>
+                    <div class="flex items-center gap-3 bg-amber-100/80 p-6 rounded-xl border border-amber-300">
+                        <i class="fa-regular fa-star text-amber-600"></i>
                         <span class="text-gray-700 font-medium">Portfolio Analytics</span>
                     </div>
-                    <div class="flex items-center gap-3 bg-amber-100/80 p-6 rounded-xl border border-amber-400">
-                        <div class="w-2 h-2 bg-amber-600 rounded-full"></div>
+                    <div class="flex items-center gap-3 bg-amber-100/80 p-6 rounded-xl border border-amber-300">
+                       <i class="fa-regular fa-star text-amber-600"></i>
                         <span class="text-gray-700 font-medium">Portfolio Analytics</span>
                     </div>
-                    <div class="flex items-center gap-3 bg-amber-100/80 p-6 rounded-xl border border-amber-400">
-                        <div class="w-2 h-2 bg-amber-600 rounded-full"></div>
+                    <div class="flex items-center gap-3 bg-amber-100/80 p-6 rounded-xl border border-amber-300">
+                       <i class="fa-regular fa-star text-amber-600"></i>
                         <span class="text-gray-700 font-medium">Portfolio Analytics</span>
                     </div>
                 </div>

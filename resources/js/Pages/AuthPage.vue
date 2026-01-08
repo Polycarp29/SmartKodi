@@ -39,11 +39,14 @@ const toggleAuth = () => {
             <!-- Main Content -->
             <div class="flex items-center justify-center min-h-screen p-4">
                 <div class="w-full max-w-md">
+
                     <!-- Auth Forms -->
                     <transition name="fade" mode="out-in">
-                        <LoginForm v-if="view == 'login'"></LoginForm>
-                        <RegistrationForm v-if="view == 'register'"></RegistrationForm>
+                        <LoginForm v-if="view === 'login'"></LoginForm>
+                        <RegistrationForm v-else-if="view === 'register'"></RegistrationForm>
                     </transition>
+
+
 
                     <!-- Footer Note -->
                     <p class="text-center text-gray-500 text-xs mt-8">
@@ -63,11 +66,11 @@ const toggleAuth = () => {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-  opacity: 0;
+    opacity: 0;
 }
 </style>
