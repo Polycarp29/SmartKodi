@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Middleware\BrowserSessionsCheck;
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -12,6 +14,15 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
+        $middleware->web(append: [
+             // Middleware to handle inertia requests
+             HandleInertiaRequests::class,
+             
+        ]);
+
+        // $middleware->alias([
+            
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
