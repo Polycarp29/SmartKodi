@@ -5,24 +5,18 @@ import DashboardLayout from '../Layouts/DashboardLayout.vue';
 
 <template>
     <DashboardLayout>
-        <div class="p-6">
-            <h1 class="text-3xl font-bold text-gray-900 mb-4">Welcome to Dashboard</h1>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Example Dashboard Card -->
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Users</h3>
-                    <p class="text-3xl font-bold text-blue-600">0</p>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Active Sessions</h3>
-                    <p class="text-3xl font-bold text-green-600">0</p>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Reports</h3>
-                    <p class="text-3xl font-bold text-purple-600">0</p>
+        <div class="w-full h-screen">
+            <!---Header-->
+            <div class="p-6">
+                <div class="flex justify-between space-y-2">
+                    <div class="flex flex-col">
+                        <h1 class="text-4xl font-bold text-gray-600">
+                            Dashboard
+                        </h1>
+                        <p class="text-lg font-light text-gray-500">
+                            Welcome to smartkoddi dashboard, we are excited to have you!
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
