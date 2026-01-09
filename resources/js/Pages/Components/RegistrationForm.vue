@@ -1,5 +1,6 @@
 <script setup>
 
+
 </script>
 <template>
     <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-8 mt-8">
@@ -112,16 +113,12 @@
                         Remember me
                     </label>
                 </div>
-                <a href="/forgot-password"
-                    class="text-sm font-medium text-amber-600 hover:text-amber-700 transition-colors">
-                    Forgot password?
-                </a>
             </div>
 
             <!-- Submit Button -->
             <button type="submit"
                 class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2">
-                Sign In
+                Sign Up
             </button>
 
             <!-- Divider -->
@@ -154,13 +151,5 @@
                 </button>
             </div>
         </form>
-
-        <!-- Sign Up Link -->
-        <p class="text-center text-gray-600 text-sm">
-            Don't have an account?
-            <a href="/register" class="font-semibold text-amber-600 hover:text-amber-700 transition-colors">
-                Sign up now
-            </a>
-        </p>
     </div>
 </template>

@@ -27,12 +27,7 @@ const toggleAuth = () => {
             <div class="absolute top-8 right-8">
                 <button @click="toggleAuth()"
                     class="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold transition-colors group">
-                    <span>{{ view == 'login' ? 'Create an account?' : 'Already have an account?' }}</span>
-                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
+                    <span>{{ view == 'login' ? 'Create an account ?' : 'Already have an account ?' }}</span>
                 </button>
             </div>
 

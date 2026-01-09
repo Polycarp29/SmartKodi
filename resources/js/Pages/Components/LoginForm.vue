@@ -109,13 +109,5 @@
                 </button>
             </div>
         </form>
-
-        <!-- Sign Up Link -->
-        <p class="text-center text-gray-600 text-sm">
-            Don't have an account?
-            <a href="/register" class="font-semibold text-amber-600 hover:text-amber-700 transition-colors">
-                Sign up now
-            </a>
-        </p>
     </div>
 </template>
