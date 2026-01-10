@@ -28,7 +28,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-100 flex">
+    <div class="min-h-screen bg-gray-50">
         <!-- Sidebar -->
         <aside id="sidebar" :class="[
             'fixed left-0 top-0 h-screen bg-white border-r border-gray-200 transition-all duration-300 z-40',
@@ -213,7 +213,6 @@ const props = defineProps({
         <!-- Main Content -->
         <main class="flex-1 sm:ml-64 p-6">
             <slot />
-            <Footer></Footer>
         </main>
     </div>
 </template>
