@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import {
-  ChevronLeft,
-  ChevronRight
+    ChevronLeft,
+    ChevronRight
 } from 'lucide-vue-next'
+import Footer from "../Components/Common/Footer.vue";
 
 // Dropdown toggles
 const openMenu = ref({
@@ -110,7 +111,7 @@ const props = defineProps({
                         <transition name="fade">
                             <div v-show="openMenu.financial" class="pl-9 space-y-1 mt-1 text-sm text-gray-600">
                                 <a href="#" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
-                                  <i class="fa-regular fa-money-bill-1"></i>
+                                    <i class="fa-regular fa-money-bill-1"></i>
                                     Rent Payments
                                 </a>
                                 <a href="#" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
@@ -212,6 +213,7 @@ const props = defineProps({
         <!-- Main Content -->
         <main class="flex-1 sm:ml-64 p-6">
             <slot />
+            <Footer></Footer>
         </main>
     </div>
 </template>
