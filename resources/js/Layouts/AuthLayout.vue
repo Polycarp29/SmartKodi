@@ -91,7 +91,6 @@
                 </div>
             </div>
 
-
             <!-- Decorative element -->
             <div class="absolute bottom-8 right-8 w-24 h-24 border-2 border-amber-500/20 rounded-full"></div>
         </div>
