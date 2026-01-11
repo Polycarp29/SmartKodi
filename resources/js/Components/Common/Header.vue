@@ -36,7 +36,7 @@
                 <!-- Profile Dropdown -->
                 <div class="relative group">
                     <button
-                        class="flex items-center space-x-3 focus:outline-none hover:bg-gray-100 rounded-full p-1 transition">
+                        class="flex items-center space-x-3 focus:outline-none hover:bg-amber-100 rounded-full p-1 transition">
                         <img src="https://i.pravatar.cc/40" alt="Profile"
                             class="w-10 h-10 rounded-full object-cover border border-gray-300" />
                         <div class="text-left hidden sm:block">
@@ -51,8 +51,8 @@
                     <!-- Dropdown Menu -->
                     <div
                         class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 group-hover:opacity-100 group-hover:visible invisible transition-all duration-200 z-20">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-100">Profile</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-100">Settings</a>
                         <div class="border-t border-gray-100"></div>
                         <a href="#" class="block px-4 py-2 text-sm text-red-500 hover:bg-red-50">Logout</a>
                     </div>
