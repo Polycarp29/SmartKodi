@@ -1,5 +1,5 @@
  @extends('errors.layouts.errors')
- @section('title', 'Service Unavailable')
+ @section('title', 'Oops! Page Not Found')
 
  @section('content')
      <div class="text-center">
