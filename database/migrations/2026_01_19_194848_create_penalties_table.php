@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('penalties', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Units::class);
-            $table->float('percentage')->nullable();
+            $table->decimal('percentage', 2, 2)->nullable();
             $table->timestamp('activated_at');
             $table->timestamp('end_date');
             $table->boolean('activate');
