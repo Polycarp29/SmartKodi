@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->integer('balance', 10, 2);
+            $table->decimal('balance', 10, 2);
             $table->uuid('uuid');
             $table->timestamps();
         });
