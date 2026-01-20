@@ -58,4 +58,8 @@ const chartOptions = ref({
 </script>
 <template>
     <ApexChart type="area" height="500" :options="chartOptions" :series="series" />
+    <!---AI Insights-->
+    <div class="w-full bg-amber-100 rounded-xl border-l border-amber-600 p-4">
+        <p class="font-light text-amber-600">Your are at a <span class="text-red-600 font-bold">Loss Ksh 35000</span>has not been paid</p>
+    </div>
 </template>
