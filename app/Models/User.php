@@ -27,7 +27,14 @@ class User extends Authenticatable
         'is_active',
         'uuid',
         'otp',
-        ''
+        'google_id',
+        'google_token',
+        'google_refresh_token',
+        'registered_from',
+        'device_name',
+        'facebook_id',
+        'facebook_access_token',
+        'facebook_refresh_token',
     ];
 
     /**
@@ -54,6 +61,7 @@ class User extends Authenticatable
             'otp_expires_at' => 'datetime',
             'last_otp_sent_at' => 'datetime',
             'last_seen_at' => 'datetime',
+            'locked_unti' => 'datetime',
         ];
     }
 
