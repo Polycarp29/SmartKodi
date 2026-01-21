@@ -2,10 +2,13 @@
 
 namespace App\Models\SystemConfigurations\Authorizations;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Roles extends Model
 {
+
+    use HasUuids;
     //
 
     protected $fillabe = [
@@ -15,6 +18,11 @@ class Roles extends Model
         'created_at',
         'updated_at',
     ];
+
+
+    public function uniqueIds(){
+        return ['uuid'];
+    }
 
     public function permissions()
     {
