@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\SystemConfigurations\Authorizations\Roles;
 
 class User extends Authenticatable
 {
@@ -46,4 +47,37 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    /**
+     * User model relationships
+     */
+
+    public function roles()
+    {
+        return $this->belongsToMany(Roles::class, 'user_roles', 'user_id', 'roles_id');
+    }
+
+
+
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'parent_id')->with('parent');
+    }
+
+    /**
+     * The children will include any user associated by the parent or created by the parent
+     */
+
+    public function children()
+    {
+        return $this->hasMany(User::class, 'parent_id')->with('children');
+    }
+
+
+    
+
+
+
+
 }
