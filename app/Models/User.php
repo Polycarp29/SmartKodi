@@ -23,6 +23,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'parent_id',
+        'is_active',
+        'uuid',
+        'otp',
+        ''
     ];
 
     /**
@@ -33,6 +38,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+
     ];
 
     /**
@@ -45,6 +51,9 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'otp_expires_at' => 'datetime',
+            'last_otp_sent_at' => 'datetime',
+            'last_seen_at' => 'datetime',
         ];
     }
 
@@ -73,11 +82,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'parent_id')->with('children');
     }
-
-
-    
-
-
-
-
 }
