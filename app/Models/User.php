@@ -90,4 +90,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'parent_id')->with('children');
     }
+
+    public function subscriptions(){
+        
+    }
+
+
 }
