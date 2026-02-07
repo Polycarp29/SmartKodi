@@ -81,7 +81,7 @@ const aiInsight = computed(() => {
             <!-- Stats & AI Analysis -->
             <div class="grid lg:grid-cols-4 gap-6">
                 <!-- Total Expenses Card -->
-                <div class="flex flex-col justify-center border-l-4 border-l-amber-500">
+                <div class="flex flex-col justify-center border-l-4 border-l-amber-500 p-4 rounded-lg border border-gray-200 bg-white">
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Total Expenses (Feb)</p>
                     <div class="text-3xl font-extrabold text-gray-800">{{ expenseStats.totalMonthly.toLocaleString() }} <span class="text-xs text-gray-400 font-normal">Ksh</span></div>
                     <div class="mt-2 text-xs font-bold text-green-600 flex items-center gap-1">

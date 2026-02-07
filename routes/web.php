@@ -11,6 +11,7 @@ use App\Http\Controllers\Pages\TenantsController;
 use App\Http\Controllers\Pages\UnitsController;
 use App\Http\Controllers\Pages\FinancialsController;
 use App\Http\Controllers\User\Auth\AuthenticationController;
+use App\Http\Controllers\Pages\UtilitiesController;
 
 Route::get('/', [AuthenticationController::class, 'login'])->name('auth.login');
 Route::get('/register', [AuthenticationController::class,'register'])->name('auth.register');
@@ -36,5 +37,11 @@ Route::prefix('settings')->group(function () {
     Route::get('/roles', [SettingsController::class, 'rolesPermissions'])->name('settings.roles');
     Route::get('/security', [SettingsController::class, 'security2fa'])->name('settings.security');
     Route::get('/properties', [SettingsController::class, 'propertySettings'])->name('settings.properties');
+});
+
+Route::prefix('utilities')->group(function () {
+    Route::get('/water', [UtilitiesController::class, 'water'])->name('utilities.water');
+    Route::get('/electricity', [UtilitiesController::class, 'electricity'])->name('utilities.electricity');
+    Route::get('/gas', [UtilitiesController::class, 'gas'])->name('utilities.gas');
 });
 

@@ -14,6 +14,25 @@ const invoices = ref([
     { id: 4, tenant: 'Michael Brown', property: 'Ruby Apartments', amount: 5000, dueDate: '2026-02-03', status: 'Overdue', type: 'Utility' },
 ]);
 
+// Scheduling State
+const showScheduleModal = ref(false);
+const scheduleConfig = ref({
+    frequency: '3 Days Before',
+    channels: {
+        sms: true,
+        email: true
+    },
+    isSaving: false
+});
+
+const saveSchedule = () => {
+    scheduleConfig.value.isSaving = true;
+    setTimeout(() => {
+        scheduleConfig.value.isSaving = false;
+        showScheduleModal.value = false;
+    }, 1500);
+};
+
 // Chart Options
 const invoiceRatioOptions = {
     chart: { type: 'bar', stacked: true, toolbar: { show: false }, fontFamily: 'Inter, sans-serif' },
@@ -70,11 +89,11 @@ const aiInsight = computed(() => {
 
             <!-- Dashboard Stats -->
             <div class="grid lg:grid-cols-4 gap-6">
-                <MediumCard class="flex flex-col justify-center border-l-4 border-l-red-500">
+                <div class="flex flex-col justify-center border-l-4 border-l-red-500 p-6 border border-gray-200 rounded-lg">
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Overdue Amount</p>
                     <div class="text-3xl font-extrabold text-red-500">55,000 <span class="text-xs text-gray-400 font-normal">Ksh</span></div>
                     <p class="text-[10px] font-bold text-red-400 mt-2 tracking-tight">Requires Immediate Action</p>
-                </MediumCard>
+                </div>
 
                 <div :class="['lg:col-span-3 rounded-3xl p-6 border border-gray-100 flex items-start gap-4', aiInsight.bg]">
                     <div class="p-4 rounded-2xl bg-white shadow-sm shrink-0">
@@ -109,14 +128,14 @@ const aiInsight = computed(() => {
                     </div>
                 </LargeCards>
 
-                <MediumCard class="bg-amber-600 text-white border-none flex flex-col justify-center">
+                <div class="bg-amber-600 text-white border-none flex flex-col justify-center p-6 rounded-lg">
                     <div class="p-3 bg-white/20 rounded-2xl w-fit mb-4">
                         <i class="fa-solid fa-paper-plane text-xl"></i>
                     </div>
                     <h3 class="text-lg font-bold mb-1">Auto-Reminders</h3>
                     <p class="text-xs text-amber-50/80 leading-relaxed mb-6">Schedule smart reminders for upcoming and overdue invoices via SMS/Email.</p>
-                    <button class="w-full py-3 bg-white text-amber-600 font-bold text-sm rounded-2xl shadow-xl shadow-amber-900/10">Configure Schedule</button>
-                </MediumCard>
+                    <button @click="showScheduleModal = true" class="w-full py-3 bg-white text-amber-600 font-bold text-sm rounded-2xl shadow-xl shadow-amber-900/10 hover:bg-amber-50 transition-colors">Configure Schedule</button>
+                </div>
             </div>
 
             <!-- Invoice Registry -->
@@ -145,7 +164,7 @@ const aiInsight = computed(() => {
                             <tr v-for="inv in invoices" :key="inv.id" class="group hover:bg-amber-50/10 transition-all duration-300">
                                 <td class="py-5">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-2xl bg-gray-900 text-amber-500 flex items-center justify-center text-[10px] font-black shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                        <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-[10px] font-black shadow-sm group-hover:scale-110 transition-transform duration-300 border border-amber-100/50">
                                             #{{ 25000 + inv.id }}
                                         </div>
                                         <div>
@@ -198,5 +217,92 @@ const aiInsight = computed(() => {
                 </div>
             </LargeCards>
         </div>
+
+        <!-- Scheduling Modal -->
+        <div v-if="showScheduleModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm transition-all">
+            <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden border border-gray-100 animate-in fade-in zoom-in duration-300">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-8">
+                        <div>
+                            <h2 class="text-2xl font-black text-gray-800">Auto-Reminder Schedule</h2>
+                            <p class="text-sm text-gray-400 font-bold uppercase tracking-widest mt-1">Configure Smart Billing Notifications</p>
+                        </div>
+                        <button @click="showScheduleModal = false" class="w-10 h-10 rounded-2xl bg-gray-50 text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-xmark text-lg"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-8">
+                        <!-- Frequency Selection -->
+                        <div>
+                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 block">Reminder Frequency</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button 
+                                    v-for="freq in ['On Due Date', '3 Days Before', '5 Days Before', 'Weekly']" 
+                                    :key="freq"
+                                    @click="scheduleConfig.frequency = freq"
+                                    :class="['px-4 py-3 rounded-2xl text-xs font-bold transition-all border text-center', 
+                                        scheduleConfig.frequency === freq ? 'bg-amber-600 text-white border-amber-600 shadow-lg shadow-amber-200' : 'bg-gray-50 text-gray-600 border-gray-100 hover:bg-white hover:border-amber-200']"
+                                >
+                                    {{ freq }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Channel Toggles -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div @click="scheduleConfig.channels.sms = !scheduleConfig.channels.sms" :class="['p-4 rounded-3xl border cursor-pointer transition-all flex flex-col items-center gap-3', scheduleConfig.channels.sms ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-100 opacity-60']">
+                                <div :class="['w-10 h-10 rounded-2xl flex items-center justify-center text-lg', scheduleConfig.channels.sms ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-400']">
+                                    <i class="fa-solid fa-mobile-screen-button"></i>
+                                </div>
+                                <span class="text-xs font-bold uppercase tracking-tight" :class="scheduleConfig.channels.sms ? 'text-green-700' : 'text-gray-400'">SMS Notifications</span>
+                                <div :class="['w-4 h-4 rounded-full flex items-center justify-center', scheduleConfig.channels.sms ? 'bg-green-500 text-white' : 'bg-gray-200']">
+                                    <i v-if="scheduleConfig.channels.sms" class="fa-solid fa-check text-[8px]"></i>
+                                </div>
+                            </div>
+
+                            <div @click="scheduleConfig.channels.email = !scheduleConfig.channels.email" :class="['p-4 rounded-3xl border cursor-pointer transition-all flex flex-col items-center gap-3', scheduleConfig.channels.email ? 'bg-blue-50 border-blue-200' : 'bg-gray-50 border-gray-100 opacity-60']">
+                                <div :class="['w-10 h-10 rounded-2xl flex items-center justify-center text-lg', scheduleConfig.channels.email ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-400']">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <span class="text-xs font-bold uppercase tracking-tight" :class="scheduleConfig.channels.email ? 'text-blue-700' : 'text-gray-400'">Email Reports</span>
+                                <div :class="['w-4 h-4 rounded-full flex items-center justify-center', scheduleConfig.channels.email ? 'bg-blue-500 text-white' : 'bg-gray-200']">
+                                    <i v-if="scheduleConfig.channels.email" class="fa-solid fa-check text-[8px]"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Template Preview -->
+                        <div class="bg-gray-50 rounded-3xl p-6 border border-gray-100 flex gap-4 items-start">
+                            <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-lg shadow-sm border border-amber-100">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1">AI Smart Template</p>
+                                <p class="text-xs text-gray-600 leading-relaxed font-bold italic">"Hi {{ '{' + 'tenant' + '}' }}, your {{ '{' + 'type' + '}' }} bill of KES {{ '{' + 'amount' + '}' }} is due on {{ '{' + 'date' + '}' }}. Please settle via M-Pesa or Bank."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex gap-3">
+                        <button @click="showScheduleModal = false" class="flex-1 py-4 bg-gray-100 text-gray-500 font-bold text-sm rounded-2xl hover:bg-gray-200 transition-all border border-gray-200">Cancel</button>
+                        <button 
+                            @click="saveSchedule" 
+                            :disabled="scheduleConfig.isSaving"
+                            class="flex-2 py-4 bg-amber-600 text-white font-bold text-sm rounded-2xl shadow-xl shadow-amber-200 hover:bg-amber-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                        >
+                            <i v-if="scheduleConfig.isSaving" class="fa-solid fa-circle-notch fa-spin"></i>
+                            {{ scheduleConfig.isSaving ? 'Saving Configuration...' : 'Save Smart Schedule' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </DashboardLayout>
 </template>
+
+<style scoped>
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes zoom-in { from { transform: scale(0.95); } to { transform: scale(1); } }
+.animate-in { animation: fade-in 0.3s ease-out, zoom-in 0.3s ease-out; }
+</style>
