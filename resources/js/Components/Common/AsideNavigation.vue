@@ -68,7 +68,7 @@ const props = defineProps({
                     </a>
 
                     <!-- Properties -->
-                    <a href="#"
+                    <a href="/properties"
                         class="flex items-center justify-between gap-3 px-3 py-2 rounded-md font-semibold hover:bg-amber-50 hover:text-amber-600 hover:border border-amber-200 transition-all duration-300">
                         <span class="flex items-center gap-3">
                             <i class="fa-solid fa-building"></i>
@@ -80,7 +80,7 @@ const props = defineProps({
                     </a>
 
                     <!-- Units -->
-                    <a href="#"
+                    <a href="/units"
                         class="flex items-center justify-between gap-3 px-3 py-2 rounded-md font-semibold hover:bg-amber-50 hover:text-amber-600 hover:border border-amber-200 transition-all duration-300">
                         <span class="flex items-center gap-3">
                             <i class="fa-solid fa-house-user"></i>
@@ -92,7 +92,7 @@ const props = defineProps({
                     </a>
 
                     <!-- Tenants -->
-                    <a href="#"
+                    <a href="/tenants"
                         class="flex items-center justify-between gap-3 px-3 py-2 rounded-md font-semibold hover:bg-amber-50 hover:text-amber-600 hover:border border-amber-200 transition-all duration-300">
                         <span class="flex items-center gap-3">
                             <i class="fa-solid fa-users"></i>
@@ -117,15 +117,15 @@ const props = defineProps({
 
                         <transition name="fade">
                             <div v-show="openMenu.financial" class="pl-9 space-y-1 mt-1 text-sm text-gray-600">
-                                <a href="#" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
+                                <a href="/financials/rent-payments" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
                                     <i class="fa-regular fa-money-bill-1"></i>
                                     Rent Payments
                                 </a>
-                                <a href="#" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
+                                <a href="/financials/expenses" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
                                     <i class="fa-solid fa-chart-line"></i>
                                     Income & Expenses
                                 </a>
-                                <a href="#" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
+                                <a href="/financials/invoices" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
                                     <i class="fa-solid fa-wallet"></i>
                                     Invoices
                                 </a>
@@ -191,6 +191,7 @@ const props = defineProps({
                             </div>
                         </transition>
                     </div>
+
 
                     <!-- Reports -->
                     <a href="#"

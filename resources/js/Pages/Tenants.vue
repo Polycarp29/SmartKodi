@@ -149,49 +149,54 @@ const selectProperty = (id) => {
                         </thead>
                         <tbody class="divide-y divide-gray-50">
                             <tr v-for="tenant in filteredTenants" :key="tenant.id"
-                                class="group hover:bg-amber-50/20 transition-colors">
-                                <td class="py-4 font-bold text-gray-800">
+                                class="group hover:bg-amber-50/10 transition-all duration-300">
+                                <td class="py-5 font-bold text-gray-800">
                                     <div class="flex items-center gap-3">
                                         <div
-                                            class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-xs font-bold">
+                                            class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-50 to-amber-100 text-amber-600 flex items-center justify-center text-xs font-extrabold shadow-sm group-hover:shadow-md group-hover:scale-110 transition-all duration-300">
                                             {{tenant.name.split(' ').map(n => n[0]).join('')}}
                                         </div>
-                                        {{ tenant.name }}
+                                        <div>
+                                            <div class="text-sm font-bold text-gray-800 group-hover:text-amber-600 transition-colors">{{ tenant.name }}</div>
+                                            <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">ID: #{{ 1000 + tenant.id }}</div>
+                                        </div>
                                     </div>
                                 </td>
-                                <td class="py-4">
-                                    <div class="text-sm font-semibold text-gray-700">{{ tenant.propertyName }}</div>
-                                    <div class="text-xs text-gray-400">Unit: {{ tenant.unit }}</div>
+                                <td class="py-5">
+                                    <div class="text-sm font-bold text-gray-700">{{ tenant.propertyName }}</div>
+                                    <div class="flex items-center gap-1.5 mt-1">
+                                        <i class="fa-solid fa-door-open text-[10px] text-gray-400"></i>
+                                        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-tight">Unit {{ tenant.unit }}</span>
+                                    </div>
                                 </td>
-                                <td class="py-4">
+                                <td class="py-5">
                                     <span :class="[
-                                        'px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider',
-                                        tenant.status === 'Active' ? 'bg-green-100 text-green-700' :
-                                            tenant.status === 'Pending' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'
+                                        'px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-1.5 shadow-sm',
+                                        tenant.status === 'Active' ? 'bg-green-50 text-green-700' :
+                                            tenant.status === 'Pending' ? 'bg-amber-50 text-amber-700' : 'bg-red-50 text-red-700'
                                     ]">
+                                        <div :class="['w-1.5 h-1.5 rounded-full', tenant.status === 'Active' ? 'bg-green-500' : tenant.status === 'Pending' ? 'bg-amber-500' : 'bg-red-500']"></div>
                                         {{ tenant.status }}
                                     </span>
                                 </td>
-                                <td class="py-4 text-sm font-bold text-gray-800">
-                                    {{ tenant.rent.toLocaleString() }} <span
-                                        class="text-[10px] text-gray-400">Ksh</span>
+                                <td class="py-5">
+                                    <div class="text-sm font-extrabold text-gray-800">{{ tenant.rent.toLocaleString() }}</div>
+                                    <div class="text-[9px] text-gray-400 font-bold uppercase tracking-tighter">KES per month</div>
                                 </td>
-                                <td class="py-4">
-                                    <span
-                                        :class="['text-sm font-bold', tenant.balance > 0 ? 'text-red-500' : 'text-gray-400']">
-                                        {{ tenant.balance.toLocaleString() }}
-                                    </span>
+                                <td class="py-5">
+                                    <div :class="['text-sm font-black', tenant.balance > 0 ? 'text-red-500' : 'text-gray-300']">
+                                        {{ tenant.balance > 0 ? tenant.balance.toLocaleString() : 'CLEAR' }}
+                                    </div>
                                 </td>
-                                <td class="py-4 text-right">
-                                    <div
-                                        class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button class="p-2 text-gray-400 hover:text-amber-600 transition-colors">
+                                <td class="py-5 text-right">
+                                    <div class="flex justify-end gap-1 px-2">
+                                        <button class="w-8 h-8 rounded-xl text-gray-400 hover:text-amber-600 hover:bg-amber-50 flex items-center justify-center transition-all" title="View Details">
                                             <i class="fa-solid fa-eye text-sm"></i>
                                         </button>
-                                        <button class="p-2 text-gray-400 hover:text-blue-600 transition-colors">
+                                        <button class="w-8 h-8 rounded-xl text-gray-400 hover:text-blue-600 hover:bg-blue-50 flex items-center justify-center transition-all" title="Update Profile">
                                             <i class="fa-solid fa-pen-to-square text-sm"></i>
                                         </button>
-                                        <button class="p-2 text-gray-400 hover:text-red-500 transition-colors">
+                                        <button class="w-8 h-8 rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 flex items-center justify-center transition-all" title="Terminate Lease">
                                             <i class="fa-solid fa-trash-can text-sm"></i>
                                         </button>
                                     </div>
