@@ -50,11 +50,20 @@ const props = defineProps({
                 <!-- Navigation -->
                 <nav class="mt-6 space-y-4 text-gray-700 font-medium">
                     <!-- Dashboard -->
-                    <a href="#"
+                    <a href="/dashboard"
                         class="flex items-center justify-between gap-3 px-3 py-2 rounded-md font-semibold hover:bg-amber-50 hover:text-amber-600 hover:border border-amber-200 transition-all duration-300">
                         <span class="flex items-center gap-3">
                             <i class="fa-solid fa-gauge-high"></i>
                             Dashboard
+                        </span>
+                    </a>
+
+                    <!-- Profile -->
+                    <a href="/profile"
+                        class="flex items-center justify-between gap-3 px-3 py-2 rounded-md font-semibold hover:bg-amber-50 hover:text-amber-600 hover:border border-amber-200 transition-all duration-300">
+                        <span class="flex items-center gap-3">
+                            <i class="fa-solid fa-user"></i>
+                            Profile
                         </span>
                     </a>
 
@@ -191,7 +200,7 @@ const props = defineProps({
                     </a>
 
                     <!-- Settings -->
-                    <a href="#"
+                    <a href="/settings"
                         class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-amber-50 hover:text-amber-600 hover:border border-amber-200 font-semibold transition-all duration-300">
                         <i class="fa-solid fa-gear"></i>
                         <span>Settings</span>

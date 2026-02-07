@@ -1,7 +1,6 @@
 <script setup>
 </script>
 
-
 <template>
     <div class="flex justify-end">
         <div class="relative w-64">

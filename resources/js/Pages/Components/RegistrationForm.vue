@@ -118,7 +118,7 @@ import TransparentButton from '../../Layouts/Widgets/TransparentButton.vue';
             </div>
 
             <!-- Submit Button -->
-            <ElevatedButton></ElevatedButton>
+            <ElevatedButton class="w-full">Sign Up</ElevatedButton>
 
             <!-- Divider -->
             <div class="relative flex items-center my-8">
