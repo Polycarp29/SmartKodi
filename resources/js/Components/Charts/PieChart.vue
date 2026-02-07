@@ -34,11 +34,13 @@ const chartOptions = ref({
           total: {
             show: true,
             label: 'Total',
-            color: '#6B7280',
-            formatter: () => 'Ksh 1.2M', // Example total, you can make this dynamic
+            color: '#9CA3AF',
+            fontSize: '12px',
+            formatter: () => 'Ksh 1.2M', 
           },
           value: {
-            fontSize: '18px',
+            fontSize: '24px',
+            fontWeight: '900',
             color: '#111827',
             formatter: val => `${val}%`,
           },
@@ -50,20 +52,26 @@ const chartOptions = ref({
 
 </script>
 <template>
-    <ApexChart type="donut" height="280" :options="chartOptions" :series="series" />
+    <div class="relative">
+        <ApexChart type="donut" height="280" :options="chartOptions" :series="series" />
+    </div>
 
-    <div class="flex justify-center gap-6 mt-4">
+    <div class="grid grid-cols-2 gap-3 mt-4">
         <div class="flex items-center space-x-2">
-            <span class="w-3 h-3 rounded-full bg-amber-600"></span>
-            <span class="text-sm text-gray-600">Collected</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
+            <span class="text-xs font-semibold text-gray-600">Maintenance</span>
         </div>
         <div class="flex items-center space-x-2">
-            <span class="w-3 h-3 rounded-full bg-amber-400"></span>
-            <span class="text-sm text-gray-600">Pending</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+            <span class="text-xs font-semibold text-gray-600">Utilities</span>
         </div>
         <div class="flex items-center space-x-2">
-            <span class="w-3 h-3 rounded-full bg-amber-200"></span>
-            <span class="text-sm text-gray-600">Overdue</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-300"></span>
+            <span class="text-xs font-semibold text-gray-600">Staff</span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-100"></span>
+            <span class="text-xs font-semibold text-gray-600">Misc</span>
         </div>
     </div>
 </template>

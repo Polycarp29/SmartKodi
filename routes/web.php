@@ -12,6 +12,8 @@ use App\Http\Controllers\Pages\UnitsController;
 use App\Http\Controllers\Pages\FinancialsController;
 use App\Http\Controllers\User\Auth\AuthenticationController;
 use App\Http\Controllers\Pages\UtilitiesController;
+use App\Http\Controllers\Pages\MaintenanceController;
+use App\Http\Controllers\Pages\ReportsController;
 
 Route::get('/', [AuthenticationController::class, 'login'])->name('auth.login');
 Route::get('/register', [AuthenticationController::class,'register'])->name('auth.register');
@@ -45,3 +47,8 @@ Route::prefix('utilities')->group(function () {
     Route::get('/gas', [UtilitiesController::class, 'gas'])->name('utilities.gas');
 });
 
+// Maintenance Route
+Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance');
+
+// Reports Route
+Route::get('/reports', [ReportsController::class, 'index'])->name('reports');

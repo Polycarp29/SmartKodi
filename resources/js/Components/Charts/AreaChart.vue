@@ -23,8 +23,13 @@ const chartOptions = ref({
         colors: ['#D97706'], // amber-600 line
     },
     fill: {
-        type: 'solid',
-        opacity: 0.1, // subtle transparency under the line (optional)
+        type: 'gradient',
+        gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.4,
+            opacityTo: 0.05,
+            stops: [0, 90, 100]
+        },
         colors: ['#D97706'],
     },
     grid: {
@@ -39,6 +44,7 @@ const chartOptions = ref({
             style: { colors: '#9CA3AF' },
         },
         axisTicks: { show: false },
+        axisBorder: { show: false },
     },
     yaxis: {
         labels: {
@@ -57,9 +63,13 @@ const chartOptions = ref({
 
 </script>
 <template>
-    <ApexChart type="area" height="500" :options="chartOptions" :series="series" />
+    <ApexChart type="area" height="350" :options="chartOptions" :series="series" />
     <!---AI Insights-->
-    <div class="w-full bg-amber-100 rounded-xl border-l border-amber-600 p-4">
-        <p class="font-light text-amber-600">Your are at a <span class="text-red-600 font-bold">Loss Ksh 35000</span>has not been paid</p>
+    <div class="w-full bg-amber-50 rounded-xl border border-amber-100 p-4 mt-4 flex items-start gap-3">
+         <i class="fa-solid fa-chart-line text-amber-600 mt-1"></i>
+         <div>
+            <h4 class="text-sm font-bold text-amber-800">Revenue Insight</h4>
+            <p class="text-xs text-amber-700 mt-0.5">You are currently <span class="font-bold text-green-600">ahead of target</span> by 12%. Outstanding arrears have decreased by 5% this week.</p>
+         </div>
     </div>
 </template>

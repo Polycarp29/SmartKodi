@@ -1,19 +1,24 @@
 <script setup>
-
 import AsideNavigation from "../Components/Common/AsideNavigation.vue";
-
+import TopBar from "../Components/Common/TopBar.vue";
 
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-50">
+    <div class="min-h-screen bg-gray-50 flex">
         <!-- Sidebar -->
-       <AsideNavigation></AsideNavigation>
+        <AsideNavigation />
 
-        <!-- Main Content -->
-        <main class="flex-1 sm:ml-64 p-6">
-            <slot />
-        </main>
+        <!-- Main Content Wrapper -->
+        <div class="flex-1 flex flex-col sm:ml-64 transition-all duration-300">
+             <!-- Top Bar -->
+            <TopBar />
+
+            <!-- Page Content -->
+            <main class="flex-1 p-6 overflow-y-auto">
+                <slot />
+            </main>
+        </div>
     </div>
 </template>
 

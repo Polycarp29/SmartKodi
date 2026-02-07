@@ -180,11 +180,11 @@ const props = defineProps({
 
                         <transition name="fade">
                             <div v-show="openMenu.maintenance" class="pl-9 space-y-1 mt-1 text-sm text-gray-600">
-                                <a href="#" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
+                                <a href="/maintenance" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
                                     <i class="fa-solid fa-clipboard-list"></i>
                                     Requests
                                 </a>
-                                <a href="#" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
+                                <a href="/maintenance" class="flex items-center gap-2 py-1.5 hover:text-amber-600">
                                     <i class="fa-solid fa-person-digging"></i>
                                     Work Orders
                                 </a>
@@ -192,9 +192,8 @@ const props = defineProps({
                         </transition>
                     </div>
 
-
                     <!-- Reports -->
-                    <a href="#"
+                    <a href="/reports"
                         class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-amber-50 hover:text-amber-600 hover:border border-amber-200 font-semibold transition-all duration-300">
                         <i class="fa-solid fa-chart-pie"></i>
                         <span>Reports</span>

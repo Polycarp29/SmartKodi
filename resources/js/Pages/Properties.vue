@@ -1,183 +1,206 @@
 <script setup>
+import { ref, computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import LargeCards from '../Components/Cards/LargeCards.vue';
 import DashboardLayout from '../Layouts/DashboardLayout.vue';
 import propertyImage from '@/assets/defaultproperty.png';
-import SearchWidget from '../Layouts/Widgets/SearchWidget.vue';
 
+const searchQuery = ref('');
 
-const isVacant = false;
+const properties = ref([
+    { 
+        id: 1, 
+        name: 'Jammi Apartments', 
+        location: 'Ruiru, Kenya', 
+        units: 50, 
+        occupied: 48, 
+        image: propertyImage,
+        status: 'Healthy',
+        statusColor: 'bg-green-100 text-green-700'
+    },
+    { 
+        id: 2, 
+        name: 'Clavence Apartments', 
+        location: 'Ruiru, Kenya', 
+        units: 50, 
+        occupied: 42, 
+        image: propertyImage,
+        status: 'Action Needed',
+        statusColor: 'bg-amber-100 text-amber-700'
+    },
+    { 
+        id: 3, 
+        name: 'Glory Apartments', 
+        location: 'Nairobi, Kenya', 
+        units: 50, 
+        occupied: 50, 
+        image: propertyImage,
+        status: 'Excellent',
+        statusColor: 'bg-green-100 text-green-700'
+    },
+    { 
+        id: 4, 
+        name: 'Sunrise Residency', 
+        location: 'Mombasa, Kenya', 
+        units: 20, 
+        occupied: 15, 
+        image: propertyImage,
+        status: 'Vacancy Risk',
+        statusColor: 'bg-red-100 text-red-700'
+    },
+     { 
+        id: 5, 
+        name: 'Highland Heights', 
+        location: 'Nakuru, Kenya', 
+        units: 30, 
+        occupied: 28, 
+        image: propertyImage,
+        status: 'Healthy',
+        statusColor: 'bg-green-100 text-green-700'
+    },
+]);
 
+const filteredProperties = computed(() => {
+    return properties.value.filter(property => 
+        property.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        property.location.toLowerCase().includes(searchQuery.value.toLowerCase())
+    );
+});
 
-
+const totalUnits = computed(() => properties.value.reduce((sum, p) => sum + p.units, 0));
+const totalOccupied = computed(() => properties.value.reduce((sum, p) => sum + p.occupied, 0));
+const occupancyRate = computed(() => Math.round((totalOccupied.value / totalUnits.value) * 100));
 
 </script>
 
 <template>
     <DashboardLayout>
-        <div class="space-y-4">
+        <div class="space-y-6">
+            <!-- Header and Actions -->
             <LargeCards>
-                <div class="space-y-2">
-                    <h1 class="text-3xl font-bold py-2 text-gray-800">
-                        Properties
-                    </h1>
-                    <p class="font-semibold text-gray-500 text-sm "><span class="hover:underline">Dashboard</span> >
-                        <span class="text-amber-600 hover:underline">Properties</span>
-                    </p>
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl font-black text-gray-800 tracking-tight">Properties</h1>
+                        <p class="text-sm font-medium text-gray-500 mt-1">
+                            <Link href="/dashboard" class="hover:text-amber-600 transition-colors">Dashboard</Link> 
+                            <span class="mx-2 text-gray-300">/</span>
+                            <span class="text-amber-600 font-bold">Properties</span>
+                        </p>
+                    </div>
+                     <button class="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold rounded-xl shadow-lg shadow-amber-200 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> Add Property
+                    </button>
                 </div>
             </LargeCards>
 
-            <!--Another large card-->
-
-            <LargeCards>
-
-                <!----Search widget-->
-                <SearchWidget></SearchWidget>
-
-                <div class="grid lg:grid-cols-4 sm:grid-cols-1 md:grid-cols-2 grid-cols-1 gap-4">
-                    <!-- Property Card -->
-                    <div
-                        class="flex flex-col bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                        <!-- Property Image -->
-                        <div class="relative">
-                            <img :src="propertyImage" alt="Property Image"
-                                class="w-full h-48 object-contain rounded-t-xl" />
-
-                            <!-- Action Icons -->
-                            <div class="absolute top-3 right-3 flex space-x-2">
-                                <!-- Edit Button -->
-                                <button
-                                    class="p-2 bg-white/80 hover:bg-white text-gray-700 rounded-full shadow-sm hover:shadow-md transition"
-                                    title="Edit Property">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M16.862 3.487a2.1 2.1 0 0 1 2.97 2.97l-9.547 9.547a2.1 2.1 0 0 1-.885.525l-3.425.856a.525.525 0 0 1-.638-.638l.856-3.425a2.1 2.1 0 0 1 .525-.885l9.547-9.547zM19.5 7.125L17.625 5.25" />
-                                    </svg>
-                                </button>
-
-                                <!-- Delete Button -->
-                                <button
-                                    class="p-2 bg-white/80 hover:bg-red-50 text-red-600 rounded-full shadow-sm hover:shadow-md transition"
-                                    title="Delete Property">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Property Details -->
-                        <div class="p-4 flex flex-col space-y-2">
-                            <h3 class="text-lg font-semibold text-gray-800">Jamii Apartment</h3>
-                            <p class="text-sm text-gray-500">Nairobi, Kenya</p>
-                            <div class="flex items-center justify-between mt-2">
-                                <span class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full font-medium"> 2
-                                    Units Vacant</span>
-                                <span
-                                    class="text-xs px-2 py-1 bg-amber-100 text-amber-700 rounded-full font-medium border-l-4 border-amber-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="h-4 inline-flex">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
-                                    </svg>
-                                    New repair request</span>
-                            </div>
-                        </div>
-
-                        <!-- Footer Action -->
-                        <div class="border-t border-gray-100 p-4">
-                            <button
-                                class="w-full text-center py-2 px-4 text-sm font-medium bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="h-4 inline-flex space-x-2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-
-                                Manage Property
-                            </button>
-                        </div>
+             <!-- AI Portfolio Health -->
+            <div class="grid md:grid-cols-2 gap-6">
+                 <div class="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl p-6 border border-indigo-100 flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                         <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
                     </div>
-
-
-                    <!-- Property Card -->
-                    <div
-                        class="flex flex-col bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                        <!-- Property Image -->
-                        <div class="relative">
-                            <img :src="propertyImage" alt="Property Image"
-                                class="w-full h-48 object-contain rounded-t-xl" />
-
-                            <!-- Action Icons -->
-                            <div class="absolute top-3 right-3 flex space-x-2">
-                                <!-- Edit Button -->
-                                <button
-                                    class="p-2 bg-white/80 hover:bg-white text-gray-700 rounded-full shadow-sm hover:shadow-md transition"
-                                    title="Edit Property">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M16.862 3.487a2.1 2.1 0 0 1 2.97 2.97l-9.547 9.547a2.1 2.1 0 0 1-.885.525l-3.425.856a.525.525 0 0 1-.638-.638l.856-3.425a2.1 2.1 0 0 1 .525-.885l9.547-9.547zM19.5 7.125L17.625 5.25" />
-                                    </svg>
-                                </button>
-
-                                <!-- Delete Button -->
-                                <button
-                                    class="p-2 bg-white/80 hover:bg-red-50 text-red-600 rounded-full shadow-sm hover:shadow-md transition"
-                                    title="Delete Property">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Property Details -->
-                        <div class="p-4 flex flex-col space-y-2">
-                            <h3 class="text-lg font-semibold text-gray-800">Jamii Apartment</h3>
-                            <p class="text-sm text-gray-500">Nairobi, Kenya</p>
-                            <div class="flex items-center justify-between mt-2">
-                                <span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full font-medium">All
-                                    Occupied</span>
-                                <span
-                                    class="text-xs px-2 py-1 bg-amber-100 text-amber-700 rounded-full font-medium border-l-4 border-amber-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="h-4 inline-flex">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
-                                    </svg>
-                                    4 Tenants have pending rent arrears</span>
-                            </div>
-                        </div>
-
-                        <!-- Footer Action -->
-                        <div class="border-t border-gray-100 p-4">
-                            <button
-                                class="w-full text-center py-2 px-4 text-sm font-medium bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="h-4 inline-flex space-x-2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-
-                                Manage Property
-                            </button>
-                        </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-indigo-900">Portfolio Health</h3>
+                        <p class="text-sm text-indigo-700 mt-1 leading-relaxed">
+                            Overall occupancy is at <strong class="text-indigo-900">{{ occupancyRate }}%</strong>. Performance is strong, but <strong class="text-indigo-900">Clavence Apartments</strong> has decreased by 5% in the last month.
+                        </p>
                     </div>
-
                 </div>
 
+                <div class="bg-white rounded-2xl p-6 border border-gray-100 flex items-center justify-between shadow-sm">
+                     <div>
+                        <p class="text-sm font-bold text-gray-400 uppercase tracking-wider">Total Units Managed</p>
+                        <h2 class="text-4xl font-black text-gray-800 mt-2">{{ totalUnits }}</h2>
+                     </div>
+                     <div class="text-right">
+                         <p class="text-sm font-bold text-gray-400 uppercase tracking-wider">Total Occupancy</p>
+                        <h2 class="text-4xl font-black text-emerald-600 mt-2">{{ totalOccupied }}</h2>
+                     </div>
+                </div>
+            </div>
+
+
+            <!-- Properties Grid -->
+            <LargeCards>
+                <!-- Search and Filters -->
+                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                    <div class="relative w-full md:w-96">
+                        <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" v-model="searchQuery" placeholder="Search properties by name or location..." 
+                            class="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-shadow shadow-sm" />
+                    </div>
+                     <div class="flex items-center gap-2">
+                         <span class="text-xs font-bold text-gray-400 uppercase mr-2">Sort By:</span>
+                         <select class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm font-bold text-gray-600 focus:ring-amber-500 focus:border-amber-500">
+                             <option>Name (A-Z)</option>
+                             <option>Occupancy (High-Low)</option>
+                             <option>Units (High-Low)</option>
+                         </select>
+                     </div>
+                </div>
+
+                <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
+                    <div v-for="property in filteredProperties" :key="property.id" 
+                        class="group flex flex-col bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-amber-100 transition-all duration-300">
+                        
+                        <!-- Property Image -->
+                        <div class="relative h-48 overflow-hidden rounded-t-2xl">
+                            <img :src="property.image" alt="Property Image" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
+                            
+                            <!-- Badges -->
+                            <div class="absolute top-4 left-4">
+                                 <span :class="['px-3 py-1 text-xs font-bold rounded-lg shadow-sm', property.statusColor]">
+                                    {{ property.status }}
+                                </span>
+                            </div>
+
+                            <!-- Actions Overlay -->
+                             <div class="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-8 h-8 bg-white/90 backdrop-blur-sm text-gray-600 rounded-lg flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors shadow-lg">
+                                    <i class="fa-solid fa-pen text-xs"></i>
+                                </button>
+                                <button class="w-8 h-8 bg-white/90 backdrop-blur-sm text-red-500 rounded-lg flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors shadow-lg">
+                                    <i class="fa-solid fa-trash text-xs"></i>
+                                </button>
+                            </div>
+
+                             <div class="absolute bottom-4 left-4 text-white">
+                                <p class="text-xs font-medium opacity-90"><i class="fa-solid fa-location-dot mr-1"></i> {{ property.location }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Details -->
+                        <div class="p-5 flex flex-col flex-1">
+                            <h3 class="text-lg font-bold text-gray-800 group-hover:text-amber-600 transition-colors mb-4">{{ property.name }}</h3>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="bg-gray-50 rounded-lg p-3 text-center">
+                                    <p class="text-xs text-gray-400 font-bold uppercase">Units</p>
+                                    <p class="text-lg font-black text-gray-800">{{ property.units }}</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-3 text-center">
+                                     <p class="text-xs text-gray-400 font-bold uppercase">Occupied</p>
+                                    <p class="text-lg font-black text-gray-800">{{ property.occupied }}</p>
+                                </div>
+                            </div>
+                            
+                            <button class="mt-auto w-full py-3 bg-gray-50 hover:bg-amber-600 hover:text-white text-gray-700 text-sm font-bold rounded-xl transition-all flex items-center justify-center gap-2 group/btn">
+                                Manage Property <i class="fa-solid fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div v-if="filteredProperties.length === 0" class="text-center py-12">
+                     <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto text-gray-400 mb-4">
+                        <i class="fa-solid fa-building-circle-xmark text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">No properties found</h3>
+                    <p class="text-gray-500 mt-1">Try adjusting your search terms.</p>
+                </div>
             </LargeCards>
         </div>
-
     </DashboardLayout>
-
 </template>
