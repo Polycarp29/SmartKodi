@@ -3,6 +3,8 @@ import ElevatedButton from '../../Layouts/Widgets/ElevatedButton.vue';
 import TransparentButton from '../../Layouts/Widgets/TransparentButton.vue';
 
 
+const showPassword = ref(false);
+
 </script>
 <template>
     <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
