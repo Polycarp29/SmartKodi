@@ -121,7 +121,7 @@ class AuthenticationController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Email verified successfully!');
+        return redirect()->route('account.load.accounts')->with('success', 'Email verified successfully!');
     }
 
     public function resendOtp(Request $request)

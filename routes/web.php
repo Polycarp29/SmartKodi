@@ -3,17 +3,18 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pages\ProfilePage;
 use App\Http\Controllers\Pages\Notifications;
+use App\Http\Controllers\Pages\UnitsController;
 use App\Http\Controllers\Pages\AIRecommendations;
+use App\Http\Controllers\Pages\ReportsController;
+use App\Http\Controllers\Pages\TenantsController;
 use App\Http\Controllers\Pages\SettingsController;
 use App\Http\Controllers\Pages\DashboardController;
-use App\Http\Controllers\Pages\PropertiesController;
-use App\Http\Controllers\Pages\TenantsController;
-use App\Http\Controllers\Pages\UnitsController;
-use App\Http\Controllers\Pages\FinancialsController;
-use App\Http\Controllers\User\Auth\AuthenticationController;
 use App\Http\Controllers\Pages\UtilitiesController;
+use App\Http\Controllers\Pages\FinancialsController;
+use App\Http\Controllers\Pages\PropertiesController;
 use App\Http\Controllers\Pages\MaintenanceController;
-use App\Http\Controllers\Pages\ReportsController;
+use App\Http\Controllers\User\Roles\RolesAndPermissions;
+use App\Http\Controllers\User\Auth\AuthenticationController;
 
 
 Route::prefix('/defaults')->group(function(){
@@ -44,6 +45,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [AuthenticationController::class, 'showVerifyOtp'])->name('verify-otp');
         Route::post('/', [AuthenticationController::class, 'handleVerifyOtp'])->name('verify-otp.post');
         Route::post('/resend', [AuthenticationController::class, 'resendOtp'])->name('resend-otp');
+    });
+
+    // User account selection
+
+    Route::prefix('account_select')->name('account.')->group(function(){
+        Route::get('/', [RolesAndPermissions::class, 'index'])->name('load.accounts');
     });
 
     // Protected Routes (verified users only)
