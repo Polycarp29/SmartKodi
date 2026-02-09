@@ -1,6 +1,7 @@
 <script setup>
 import AsideNavigation from "../Components/Common/AsideNavigation.vue";
 import TopBar from "../Components/Common/TopBar.vue";
+import Toaster from "../Components/Common/Toaster.vue";
 
 </script>
 
@@ -20,6 +21,7 @@ import TopBar from "../Components/Common/TopBar.vue";
             </main>
         </div>
     </div>
+    <Toaster />
 </template>
 
 <style scoped>

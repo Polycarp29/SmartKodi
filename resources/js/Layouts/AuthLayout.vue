@@ -1,5 +1,5 @@
 <script setup>
-// No imports needed yet
+import Toaster from "../Components/Common/Toaster.vue";
 </script>
 
 <template>
@@ -101,6 +101,5 @@
             <slot />
         </div>
     </div>
-
-
+    <Toaster />
 </template>

@@ -15,8 +15,22 @@ use App\Http\Controllers\Pages\UtilitiesController;
 use App\Http\Controllers\Pages\MaintenanceController;
 use App\Http\Controllers\Pages\ReportsController;
 
-Route::get('/', [AuthenticationController::class, 'login'])->name('auth.login');
-Route::get('/register', [AuthenticationController::class,'register'])->name('auth.register');
+Route::controller(AuthenticationController::class)->group(function () {
+    Route::get('/', 'login')->name('auth.login');
+    Route::post('/login', 'handleLogin')->name('auth.login.post');
+    Route::get('/register', 'register')->name('auth.register');
+    Route::post('/register', 'handleRegister')->name('auth.register.post');
+    Route::post('/logout', 'logout')->name('auth.logout');
+
+    Route::get('/verify-otp', 'showVerifyOtp')->name('auth.verify-otp');
+    Route::post('/verify-otp', 'handleVerifyOtp')->name('auth.verify-otp.post');
+    Route::post('/resend-otp', 'resendOtp')->name('auth.resend-otp');
+
+    Route::get('/forgot-password', 'showForgotPassword')->name('auth.forgot-password');
+    Route::post('/forgot-password', 'handleForgotPassword')->name('auth.forgot-password.post');
+    Route::get('/reset-password/{token}', 'showResetPassword')->name('auth.reset-password');
+    Route::post('/reset-password', 'handleResetPassword')->name('auth.reset-password.post');
+});
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/profile', [ProfilePage::class, 'index'])->name('profile.page');
 Route::get('/notifications', [Notifications::class, 'viewNotifications'])->name('notifications');
