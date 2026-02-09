@@ -33,8 +33,11 @@ class User extends Authenticatable
         'registered_from',
         'device_name',
         'facebook_id',
+        'otp_expires_at',
+        'last_otp_sent_at',
         'facebook_access_token',
         'facebook_refresh_token',
+        'is_active',
     ];
 
     /**

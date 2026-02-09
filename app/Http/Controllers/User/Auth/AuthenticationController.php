@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\User\Auth;
 
+use Log;
+use Carbon\Carbon;
+use App\Models\User;
 use Inertia\Inertia;
+use App\Mail\OtpMail;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\OtpMail;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 
 class AuthenticationController extends Controller
 {
@@ -32,9 +33,30 @@ class AuthenticationController extends Controller
     public function handleRegister(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-Z\s\-\'\.]+$/', // Only allows letters, spaces, hyphens, apostrophes, and dots
+            ],
+            'email' => [
+                'required',
+                'string',
+                'email:rfc,dns', // Ensures valid domain (checks MX records)
+                'max:255',
+                'unique:users,email',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'max:64',
+                'confirmed',
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[0-9]/',      // must contain at least one digit
+                'regex:/[@$!%*#?&]/', // must contain a special character
+            ],
         ]);
 
         $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
@@ -48,6 +70,13 @@ class AuthenticationController extends Controller
             'otp_expires_at' => Carbon::now()->addMinutes(10),
             'last_otp_sent_at' => Carbon::now(),
             'is_active' => false,
+        ]);
+
+
+        // Log OTP
+        Log::info('User OTP', [
+            'email' => $user->email,
+            'otp' => $otp,
         ]);
 
         Mail::to($user->email)->send(new OtpMail($otp));

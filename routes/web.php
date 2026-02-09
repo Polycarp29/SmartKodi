@@ -31,38 +31,45 @@ Route::controller(AuthenticationController::class)->group(function () {
     Route::get('/reset-password/{token}', 'showResetPassword')->name('auth.reset-password');
     Route::post('/reset-password', 'handleResetPassword')->name('auth.reset-password.post');
 });
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/profile', [ProfilePage::class, 'index'])->name('profile.page');
-Route::get('/notifications', [Notifications::class, 'viewNotifications'])->name('notifications');
-Route::get('/ai-recommendations', [AIRecommendations::class, 'index'])->name('ai');
-Route::get('/properties', [PropertiesController::class, 'index'])->name('properties');
-Route::get('/tenants', [TenantsController::class, 'index'])->name('tenants');
-Route::get('/units', [UnitsController::class, 'index'])->name('units');
 
-Route::prefix('financials')->group(function () {
-    Route::get('/rent-payments', [FinancialsController::class, 'rentPayments'])->name('financials.payments');
-    Route::get('/expenses', [FinancialsController::class, 'expenses'])->name('financials.expenses');
-    Route::get('/invoices', [FinancialsController::class, 'invoices'])->name('financials.invoices');
+// Authentication Middleware
+
+Route::middleware('auth')->group(function () {
+    Route::middleware('email.isverified')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/profile', [ProfilePage::class, 'index'])->name('profile.page');
+        Route::get('/notifications', [Notifications::class, 'viewNotifications'])->name('notifications');
+        Route::get('/ai-recommendations', [AIRecommendations::class, 'index'])->name('ai');
+        Route::get('/properties', [PropertiesController::class, 'index'])->name('properties');
+        Route::get('/tenants', [TenantsController::class, 'index'])->name('tenants');
+        Route::get('/units', [UnitsController::class, 'index'])->name('units');
+
+        Route::prefix('financials')->group(function () {
+            Route::get('/rent-payments', [FinancialsController::class, 'rentPayments'])->name('financials.payments');
+            Route::get('/expenses', [FinancialsController::class, 'expenses'])->name('financials.expenses');
+            Route::get('/invoices', [FinancialsController::class, 'invoices'])->name('financials.invoices');
+        });
+
+        Route::get('/settings', [SettingsController::class, 'index'])->name('view.settings');
+        Route::prefix('settings')->group(function () {
+            Route::get('/subscriptions', [SettingsController::class, 'subscriptions'])->name('settings.subscriptions');
+            Route::get('/ai', [SettingsController::class, 'aiSettings'])->name('settings.ai');
+            Route::get('/sms', [SettingsController::class, 'smsSettings'])->name('settings.sms');
+            Route::get('/roles', [SettingsController::class, 'rolesPermissions'])->name('settings.roles');
+            Route::get('/security', [SettingsController::class, 'security2fa'])->name('settings.security');
+            Route::get('/properties', [SettingsController::class, 'propertySettings'])->name('settings.properties');
+        });
+
+        Route::prefix('utilities')->group(function () {
+            Route::get('/water', [UtilitiesController::class, 'water'])->name('utilities.water');
+            Route::get('/electricity', [UtilitiesController::class, 'electricity'])->name('utilities.electricity');
+            Route::get('/gas', [UtilitiesController::class, 'gas'])->name('utilities.gas');
+        });
+
+        // Maintenance Route
+        Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance');
+
+        // Reports Route
+        Route::get('/reports', [ReportsController::class, 'index'])->name('reports');
+    });
 });
-
-Route::get('/settings', [SettingsController::class, 'index'])->name('view.settings');
-Route::prefix('settings')->group(function () {
-    Route::get('/subscriptions', [SettingsController::class, 'subscriptions'])->name('settings.subscriptions');
-    Route::get('/ai', [SettingsController::class, 'aiSettings'])->name('settings.ai');
-    Route::get('/sms', [SettingsController::class, 'smsSettings'])->name('settings.sms');
-    Route::get('/roles', [SettingsController::class, 'rolesPermissions'])->name('settings.roles');
-    Route::get('/security', [SettingsController::class, 'security2fa'])->name('settings.security');
-    Route::get('/properties', [SettingsController::class, 'propertySettings'])->name('settings.properties');
-});
-
-Route::prefix('utilities')->group(function () {
-    Route::get('/water', [UtilitiesController::class, 'water'])->name('utilities.water');
-    Route::get('/electricity', [UtilitiesController::class, 'electricity'])->name('utilities.electricity');
-    Route::get('/gas', [UtilitiesController::class, 'gas'])->name('utilities.gas');
-});
-
-// Maintenance Route
-Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance');
-
-// Reports Route
-Route::get('/reports', [ReportsController::class, 'index'])->name('reports');

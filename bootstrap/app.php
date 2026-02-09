@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\BrowserSessionsCheck;
+use App\Http\Middleware\EmailVerification;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,9 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
              
         ]);
 
-        // $middleware->alias([
-            
-        // ]);
+        $middleware->alias([
+            'email.isverified' => EmailVerification::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

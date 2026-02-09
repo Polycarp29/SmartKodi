@@ -5,6 +5,7 @@ import 'vue-sonner/style.css'
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import VueApexCharts from 'vue3-apexcharts' //  Import ApexCharts
+import { ZiggyVue } from '../../vendor/tightenco/ziggy'
 
 createInertiaApp({
   resolve: name => {
@@ -15,6 +16,7 @@ createInertiaApp({
     const vueApp = createApp({ render: () => h(App, props) })
 
     vueApp.use(plugin)
+    vueApp.use(ZiggyVue)
     vueApp.use(VueApexCharts) // Apex charts Register globally
     vueApp.component('ApexChart', VueApexCharts) //  Define global component
 
