@@ -23,13 +23,21 @@ class EmailVerification
                 ->with('error', 'Please log in to continue.');
         }
 
-        $user = Auth::user();
+        // Get fresh user data from database (avoid stale cached data)
+        $user = Auth::user()->fresh();
 
         // Ensure user exists and is verified
-        if (!$user->is_verified) {
+        if (!$user->email_verified_at) {
             return redirect()
                 ->route('auth.verify-otp', ['email' => $user->email])
                 ->with('error', 'Please verify your account before proceeding.');
+        }
+
+        // Ensure user has selected an account type (use exists() for efficiency)
+        if (!$user->roles()->exists()) {
+            return redirect()
+                ->route('account.load.accounts')
+                ->with('info', 'Please select your account type to continue.');
         }
 
         return $next($request);

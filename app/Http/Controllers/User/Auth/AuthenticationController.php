@@ -87,14 +87,15 @@ class AuthenticationController extends Controller
 
     public function showVerifyOtp(Request $request)
     {
+        $request->validate(['email' => 'required|email|exists:users,email']);
+        $user = User::where('email', $request->email)->first();
 
-        $user = Auth::user();
-        if ($user) {
+        if ($user && !$user->email_verified_at) {
             return Inertia::render('VerifyOtp', [
                 'email' => $request->email
             ]);
         } else {
-            return redirect()->route('auth.login')->with('error', 'Unable to identify the user');
+            return redirect()->route('auth.login')->with('info', 'Account already verified. Please login.');
         }
     }
 
@@ -121,7 +122,7 @@ class AuthenticationController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('account.load.accounts')->with('success', 'Email verified successfully!');
+        return redirect()->route('account.load.accounts')->with('success', 'Email verified successfully! Please select your account type.');
     }
 
     public function resendOtp(Request $request)
@@ -157,9 +158,34 @@ class AuthenticationController extends Controller
             $user = Auth::user();
 
             if (!$user->email_verified_at) {
-                Auth::logout();
+                // Send a fresh OTP if expired or not set (respecting rate limits)
+                $shouldSendOtp = !$user->otp || 
+                    !$user->otp_expires_at || 
+                    Carbon::now()->isAfter($user->otp_expires_at);
+                
+                $canSendOtp = !$user->last_otp_sent_at || 
+                    Carbon::parse($user->last_otp_sent_at)->addMinutes(1)->isPast();
+
+                if ($shouldSendOtp && $canSendOtp) {
+                    $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+                    $user->update([
+                        'otp' => $otp,
+                        'otp_expires_at' => Carbon::now()->addMinutes(10),
+                        'last_otp_sent_at' => Carbon::now(),
+                    ]);
+                    
+                    Mail::to($user->email)->send(new OtpMail($otp));
+                }
+
                 return redirect()->route('auth.verify-otp', ['email' => $user->email])
-                    ->with('warning', 'Please verify your email address first.');
+                    ->with('warning', 'Please verify your email address first. A verification code has been sent to your email.');
+            }
+
+            // Check if user has selected an account type
+            if (!$user->roles()->exists()) {
+                $request->session()->regenerate();
+                return redirect()->route('account.load.accounts')
+                    ->with('info', 'Please select your account type to continue.');
             }
 
             $request->session()->regenerate();

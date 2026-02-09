@@ -12,10 +12,11 @@ class Roles extends Model
     use HasUuids;
     //
 
-    protected $fillabe = [
+    protected $fillable = [
         'name',
         'uuid',
         'role_description',
+        'is_role_active',
         'created_at',
         'updated_at',
     ];

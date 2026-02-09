@@ -36,21 +36,22 @@ Route::controller(AuthenticationController::class)->group(function () {
     Route::post('/reset-password', 'handleResetPassword')->name('auth.reset-password.post');
 });
 
+// OTP Verification (public - user not logged in yet after registration)
+Route::prefix('verify-otp')->name('auth.')->group(function () {
+    Route::get('/', [AuthenticationController::class, 'showVerifyOtp'])->name('verify-otp');
+    Route::post('/', [AuthenticationController::class, 'handleVerifyOtp'])->name('verify-otp.post');
+    Route::post('/resend', [AuthenticationController::class, 'resendOtp'])->name('resend-otp');
+});
+
 // Authentication Middleware
 
 Route::middleware('auth')->group(function () {
-
-    // OTP Verification
-    Route::prefix('verify-otp')->name('auth.')->group(function () {
-        Route::get('/', [AuthenticationController::class, 'showVerifyOtp'])->name('verify-otp');
-        Route::post('/', [AuthenticationController::class, 'handleVerifyOtp'])->name('verify-otp.post');
-        Route::post('/resend', [AuthenticationController::class, 'resendOtp'])->name('resend-otp');
-    });
 
     // User account selection
 
     Route::prefix('account_select')->name('account.')->group(function(){
         Route::get('/', [RolesAndPermissions::class, 'index'])->name('load.accounts');
+        Route::post('/', [RolesAndPermissions::class, 'handleAccountTypeSelection'])->name('select.post');
     });
 
     // Protected Routes (verified users only)

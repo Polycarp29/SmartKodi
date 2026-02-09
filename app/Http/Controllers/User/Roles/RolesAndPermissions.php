@@ -49,8 +49,14 @@ class RolesAndPermissions extends Controller
                 ->with('error', 'You must be logged in to select an account type.');
         }
 
-        // Update the pivot table without removing existing roles
-        $user->roles()->syncWithoutDetaching($validated['id']);
+        // Attach the role to the user
+        $user->roles()->syncWithoutDetaching([$validated['id']]);
+        
+        // Refresh the user model to ensure middleware sees updated data
+        $user->refresh();
+        
+        // Clear any cached relationship data
+        $user->load('roles');
 
         return redirect()->route('dashboard')
             ->with('success', 'Account type selected and saved successfully.');

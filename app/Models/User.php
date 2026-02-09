@@ -27,6 +27,7 @@ class User extends Authenticatable
         'is_active',
         'uuid',
         'otp',
+        'email_verified_at',
         'google_id',
         'google_token',
         'google_refresh_token',
@@ -37,7 +38,6 @@ class User extends Authenticatable
         'last_otp_sent_at',
         'facebook_access_token',
         'facebook_refresh_token',
-        'is_active',
     ];
 
     /**
