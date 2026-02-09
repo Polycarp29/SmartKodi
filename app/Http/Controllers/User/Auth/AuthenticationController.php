@@ -87,10 +87,17 @@ class AuthenticationController extends Controller
 
     public function showVerifyOtp(Request $request)
     {
-        return Inertia::render('VerifyOtp', [
-            'email' => $request->email
-        ]);
+
+        $user = Auth::user();
+        if ($user) {
+            return Inertia::render('VerifyOtp', [
+                'email' => $request->email
+            ]);
+        } else {
+            return redirect()->route('auth.login')->with('error', 'Unable to identify the user');
+        }
     }
+
 
     public function handleVerifyOtp(Request $request)
     {

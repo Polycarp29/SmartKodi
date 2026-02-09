@@ -16,16 +16,22 @@ class EmailVerification
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // check the user
+        // Ensure user is authenticated
+        if (!Auth::check()) {
+            return redirect()
+                ->route('auth.login')
+                ->with('error', 'Please log in to continue.');
+        }
 
         $user = Auth::user();
 
-        if(auth()->check() && !$user->is_verified){
-            // return back to verify otp
-            return redirect()->route('auth.verify-otp')->with('error', 'Please verify your account.');
-        }elseif(!$user){
-            return redirect()->route('auth.login')->with('error', 'User not found'); 
+        // Ensure user exists and is verified
+        if (!$user->is_verified) {
+            return redirect()
+                ->route('auth.verify-otp', ['email' => $user->email])
+                ->with('error', 'Please verify your account before proceeding.');
         }
+
         return $next($request);
     }
 }
