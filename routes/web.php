@@ -15,6 +15,13 @@ use App\Http\Controllers\Pages\UtilitiesController;
 use App\Http\Controllers\Pages\MaintenanceController;
 use App\Http\Controllers\Pages\ReportsController;
 
+
+Route::prefix('/defaults')->group(function(){
+    Route::get('/login', function(){
+        return redirect()->route('auth.login');
+    })->name('login');
+});
+
 Route::controller(AuthenticationController::class)->group(function () {
     Route::get('/', 'login')->name('auth.login');
     Route::post('/login', 'handleLogin')->name('auth.login.post');
