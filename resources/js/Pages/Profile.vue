@@ -4,18 +4,20 @@ import LargeCards from '../Components/Cards/LargeCards.vue';
 import DashboardLayout from '../Layouts/DashboardLayout.vue';
 import ElevatedButton from '../Layouts/Widgets/ElevatedButton.vue';
 
+
+// define props
+
+
+const props = defineProps({
+    data: {
+        type: Object,
+        default: () => ({}),
+    }
+})
+
 const profile = ref({
-    first_name: 'John',
-    middle_name: '',
-    last_name: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '+254 700 000 000',
-    id_number: '12345678',
-    country: 'Kenya',
-    city: 'Nairobi',
-    address_line_1: '123 Smart St',
-    address_line_2: 'Suite 4B',
-    avatar: null
+    ...props.data,
+    email: props.data?.user?.email ?? '',
 });
 
 const avatarPreview = ref(null);
@@ -83,13 +85,15 @@ const handleAvatarChange = (e) => {
                 <section class="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
                     <div class="flex flex-col md:flex-row items-center gap-8">
                         <div class="relative group">
-                            <div class="w-32 h-32 rounded-3xl bg-amber-100 border-4 border-white shadow-xl overflow-hidden overflow-hidden">
+                            <div
+                                class="w-32 h-32 rounded-3xl bg-amber-100 border-4 border-white shadow-xl overflow-hidden overflow-hidden">
                                 <img v-if="avatarPreview" :src="avatarPreview" class="w-full h-full object-cover" />
                                 <div v-else class="w-full h-full flex items-center justify-center text-amber-600">
                                     <i class="fa-solid fa-user text-5xl"></i>
                                 </div>
                             </div>
-                            <label class="absolute -bottom-2 -right-2 bg-white border border-gray-200 p-2 rounded-xl shadow-lg cursor-pointer hover:bg-amber-50 hover:text-amber-600 transition-all transition-all transition-all">
+                            <label
+                                class="absolute -bottom-2 -right-2 bg-white border border-gray-200 p-2 rounded-xl shadow-lg cursor-pointer hover:bg-amber-50 hover:text-amber-600 transition-all transition-all transition-all">
                                 <i class="fa-solid fa-camera text-sm"></i>
                                 <input type="file" class="hidden" @change="handleAvatarChange" accept="image/*">
                             </label>
@@ -98,8 +102,11 @@ const handleAvatarChange = (e) => {
                             <h2 class="text-xl font-bold text-gray-800">Profile Picture</h2>
                             <p class="text-sm text-gray-500">JPG, GIF or PNG. Max size of 2MB</p>
                             <div class="flex gap-2 pt-2">
-                                <button class="text-xs font-bold text-amber-600 border border-amber-200 px-3 py-1.5 rounded-lg hover:bg-amber-50">Upload New</button>
-                                <button class="text-xs font-bold text-gray-400 hover:text-red-500 transition-colors">Remove</button>
+                                <button
+                                    class="text-xs font-bold text-amber-600 border border-amber-200 px-3 py-1.5 rounded-lg hover:bg-amber-50">Upload
+                                    New</button>
+                                <button
+                                    class="text-xs font-bold text-gray-400 hover:text-red-500 transition-colors">Remove</button>
                             </div>
                         </div>
                     </div>
@@ -115,26 +122,36 @@ const handleAvatarChange = (e) => {
                         </h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">First Name</label>
-                                <input v-model="profile.first_name" type="text" class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">First
+                                    Name</label>
+                                <input v-model="profile.first_name" type="text"
+                                    class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                             </div>
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Middle Name</label>
-                                <input v-model="profile.middle_name" type="text" class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Middle
+                                    Name</label>
+                                <input v-model="profile.middle_name" type="text"
+                                    class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                             </div>
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Last Name</label>
-                                <input v-model="profile.last_name" type="text" class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Last
+                                    Name</label>
+                                <input v-model="profile.last_name" type="text"
+                                    class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Email Address</label>
-                                <input v-model="profile.email" type="email" disabled class="w-full bg-gray-100 border-gray-200 rounded-xl text-sm text-gray-500 p-3 cursor-not-allowed" />
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Email
+                                    Address</label>
+                                <input v-model="profile.email" type="email" disabled
+                                    class="w-full bg-gray-100 border-gray-200 rounded-xl text-sm text-gray-500 p-3 cursor-not-allowed" />
                             </div>
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Phone Number</label>
-                                <input v-model="profile.phone" type="text" class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Phone
+                                    Number</label>
+                                <input v-model="profile.phone" type="text"
+                                    class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                             </div>
                         </div>
                     </div>
@@ -150,7 +167,8 @@ const handleAvatarChange = (e) => {
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Country</label>
-                                <select v-model="profile.country" class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3">
+                                <select v-model="profile.country"
+                                    class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3">
                                     <option>Kenya</option>
                                     <option>Uganda</option>
                                     <option>Tanzania</option>
@@ -158,22 +176,28 @@ const handleAvatarChange = (e) => {
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">City</label>
-                                <input v-model="profile.city" type="text" class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                                <input v-model="profile.city" type="text"
+                                    class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Address Line 1</label>
-                            <input v-model="profile.address_line_1" type="text" class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Address Line
+                                1</label>
+                            <input v-model="profile.address_line_1" type="text"
+                                class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Address Line 2 (Optional)</label>
-                            <input v-model="profile.address_line_2" type="text" class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Address Line 2
+                                (Optional)</label>
+                            <input v-model="profile.address_line_2" type="text"
+                                class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                         </div>
                     </div>
 
                     <!-- Footer Actions -->
                     <div class="flex justify-end items-center gap-4 pt-4">
-                        <button class="px-6 py-2.5 text-sm font-bold text-gray-400 hover:text-red-500 transition-colors">
+                        <button
+                            class="px-6 py-2.5 text-sm font-bold text-gray-400 hover:text-red-500 transition-colors">
                             Discard
                         </button>
                         <ElevatedButton>

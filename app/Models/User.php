@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\SystemConfigurations\Authorizations\Roles;
+use App\Models\UserProfile\ProfileInfo;
 
 class User extends Authenticatable
 {
@@ -96,6 +97,10 @@ class User extends Authenticatable
 
     public function subscriptions(){
         
+    }
+
+    public function profileInfo(){
+        return $this->hasOne(ProfileInfo::class, 'user_id');
     }
 
 
