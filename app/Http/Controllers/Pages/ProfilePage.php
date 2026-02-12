@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\UserProfile\ProfileInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class ProfilePage extends Controller
 {
@@ -37,6 +38,6 @@ class ProfilePage extends Controller
             return collect(); // empty collection
         }
 
-        return ProfileInfo::with('user:id, name, email')->where('user_id', $userId)->first();
+        return User::with('profileInfo')->where('id', $userId)->first();
     }
 }

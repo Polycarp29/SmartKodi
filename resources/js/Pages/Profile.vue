@@ -17,7 +17,11 @@ const props = defineProps({
 
 const profile = ref({
     ...props.data,
-    email: props.data?.user?.email ?? '',
+    // email: props.data?.user?.email ?? '',
+    first_name: props.data?.profileInfo?.first_name ?? '',
+    last_name: props.data?.profileInfo?.last_name ?? '',
+    middle_name: props.data?.profileInfo?.middle_name ?? '',
+
 });
 
 const avatarPreview = ref(null);
@@ -124,19 +128,19 @@ const handleAvatarChange = (e) => {
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">First
                                     Name</label>
-                                <input v-model="profile.first_name" type="text"
+                                <input v-model="first_name" type="text"
                                     class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Middle
                                     Name</label>
-                                <input v-model="profile.middle_name" type="text"
+                                <input v-model="middle_name" type="text"
                                     class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Last
                                     Name</label>
-                                <input v-model="profile.last_name" type="text"
+                                <input v-model="last_name" type="text"
                                     class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                             </div>
                         </div>
