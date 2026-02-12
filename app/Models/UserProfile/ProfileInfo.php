@@ -23,6 +23,7 @@ class ProfileInfo extends Model
         'address_line_1',
         'address_line_2',
         'user_id',
+        'phone',
     ];
 
 

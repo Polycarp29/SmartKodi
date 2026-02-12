@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 import LargeCards from '../Components/Cards/LargeCards.vue';
 import DashboardLayout from '../Layouts/DashboardLayout.vue';
 import ElevatedButton from '../Layouts/Widgets/ElevatedButton.vue';
 
 
 // define props
-
 
 const props = defineProps({
     data: {
@@ -15,22 +15,36 @@ const props = defineProps({
     }
 })
 
-const profile = ref({
-    ...props.data,
-    // email: props.data?.user?.email ?? '',
-    first_name: props.data?.profileInfo?.first_name ?? '',
-    last_name: props.data?.profileInfo?.last_name ?? '',
-    middle_name: props.data?.profileInfo?.middle_name ?? '',
-
+const form = useForm({
+    first_name: props.data?.profile_info?.first_name ?? '',
+    last_name: props.data?.profile_info?.last_name ?? '',
+    middle_name: props.data?.profile_info?.middle_name ?? '',
+    phone: props.data?.profile_info?.phone ?? '',
+    country: props.data?.profile_info?.country ?? 'Kenya',
+    city: props.data?.profile_info?.city ?? '',
+    address_line_1: props.data?.profile_info?.address_line_1 ?? '',
+    address_line_2: props.data?.profile_info?.address_line_2 ?? '',
+    avatar: null,
 });
 
-const avatarPreview = ref(null);
+const avatarPreview = ref(props.data?.profile_info?.avatar ? `/storage/${props.data.profile_info.avatar}` : null);
 
 const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
         avatarPreview.value = URL.createObjectURL(file);
+        form.avatar = file;
     }
+};
+
+const submit = () => {
+    form.post(route('profile.update'), {
+        preserveScroll: true,
+        forceFormData: true,
+        onSuccess: () => {
+            // Success logic if needed, but the back() in controller handles reload
+        }
+    });
 };
 </script>
 
@@ -128,34 +142,38 @@ const handleAvatarChange = (e) => {
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">First
                                     Name</label>
-                                <input v-model="first_name" type="text"
+                                <input v-model="form.first_name" type="text"
                                     class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                                <div v-if="form.errors.first_name" class="text-red-500 text-xs">{{ form.errors.first_name }}</div>
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Middle
                                     Name</label>
-                                <input v-model="middle_name" type="text"
+                                <input v-model="form.middle_name" type="text"
                                     class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                                <div v-if="form.errors.middle_name" class="text-red-500 text-xs">{{ form.errors.middle_name }}</div>
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Last
                                     Name</label>
-                                <input v-model="last_name" type="text"
+                                <input v-model="form.last_name" type="text"
                                     class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                                <div v-if="form.errors.last_name" class="text-red-500 text-xs">{{ form.errors.last_name }}</div>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Email
                                     Address</label>
-                                <input v-model="profile.email" type="email" disabled
+                                <input :value="props.data?.email" type="email" disabled
                                     class="w-full bg-gray-100 border-gray-200 rounded-xl text-sm text-gray-500 p-3 cursor-not-allowed" />
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Phone
                                     Number</label>
-                                <input v-model="profile.phone" type="text"
+                                <input v-model="form.phone" type="text"
                                     class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
+                                <div v-if="form.errors.phone" class="text-red-500 text-xs">{{ form.errors.phone }}</div>
                             </div>
                         </div>
                     </div>
@@ -171,7 +189,7 @@ const handleAvatarChange = (e) => {
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Country</label>
-                                <select v-model="profile.country"
+                                <select v-model="form.country"
                                     class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3">
                                     <option>Kenya</option>
                                     <option>Uganda</option>
@@ -180,20 +198,20 @@ const handleAvatarChange = (e) => {
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">City</label>
-                                <input v-model="profile.city" type="text"
+                                <input v-model="form.city" type="text"
                                     class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                             </div>
                         </div>
                         <div class="space-y-2">
                             <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Address Line
                                 1</label>
-                            <input v-model="profile.address_line_1" type="text"
+                            <input v-model="form.address_line_1" type="text"
                                 class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                         </div>
                         <div class="space-y-2">
                             <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Address Line 2
                                 (Optional)</label>
-                            <input v-model="profile.address_line_2" type="text"
+                            <input v-model="form.address_line_2" type="text"
                                 class="w-full bg-gray-50 border-gray-200 rounded-xl text-sm focus:ring-amber-500 focus:border-amber-500 p-3" />
                         </div>
                     </div>
@@ -204,8 +222,9 @@ const handleAvatarChange = (e) => {
                             class="px-6 py-2.5 text-sm font-bold text-gray-400 hover:text-red-500 transition-colors">
                             Discard
                         </button>
-                        <ElevatedButton>
-                            Update Profile
+                        <ElevatedButton @click="submit" :disabled="form.processing">
+                            <span v-if="form.processing">Updating...</span>
+                            <span v-else>Update Profile</span>
                         </ElevatedButton>
                     </div>
                 </section>

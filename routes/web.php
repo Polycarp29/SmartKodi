@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
         // Dashboard & Core Pages
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/profile', [ProfilePage::class, 'index'])->name('profile.page');
+        Route::post('/profile', [ProfilePage::class, 'update'])->name('profile.update');
         Route::get('/notifications', [Notifications::class, 'viewNotifications'])->name('notifications');
         Route::get('/ai-recommendations', [AIRecommendations::class, 'index'])->name('ai');
         Route::get('/properties', [PropertiesController::class, 'index'])->name('properties');

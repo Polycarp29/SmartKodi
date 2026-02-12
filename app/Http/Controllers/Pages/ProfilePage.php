@@ -40,4 +40,38 @@ class ProfilePage extends Controller
 
         return User::with('profileInfo')->where('id', $userId)->first();
     }
+
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'country' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'address_line_1' => 'nullable|string|max:255',
+            'address_line_2' => 'nullable|string|max:255',
+            'avatar' => 'nullable|image|max:2048', // 2MB Max
+        ]);
+
+        $profileInfo = $user->profileInfo ?? new ProfileInfo(['user_id' => $user->id]);
+
+        // Remove avatar from validated data to handle it separately
+        $data = $validated;
+        unset($data['avatar']);
+
+        $profileInfo->fill($data);
+
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $profileInfo->avatar = $path;
+        }
+
+        $profileInfo->save();
+
+        return redirect()->back()->with('success', 'Profile updated successfully.');
+    }
 }
